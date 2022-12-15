@@ -7,7 +7,7 @@ import {
     Stack,
     Collapse,
     Icon,
-    Link,
+    Link ,
     Popover,
     PopoverTrigger,
     PopoverContent,
@@ -27,7 +27,7 @@ import {
     const { isOpen, onToggle } = useDisclosure();
   
     return (
-      <Box>
+      <Box position={'fixed'} w={'100%'} zIndex={5} >
         <Flex
           bg={useColorModeValue('white', 'gray.800')}
           color={useColorModeValue('gray.600', 'white')}
@@ -52,7 +52,7 @@ import {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Image src={Logo} w={{ base: '50%', md: '10%' }} />
+            <Link href='/' w={{ base: '50%', md: '10%' }}><Image src={Logo}  /></Link>
   
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav />
@@ -69,7 +69,7 @@ import {
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
-              href={'#'}>
+              href={'/login'}>
               Sign In
             </Button>
             <Button
@@ -78,7 +78,7 @@ import {
               fontWeight={600}
               color={'white'}
               bg={'pink.400'}
-              href={'#'}
+              href={'/register'}
               _hover={{
                 bg: 'pink.300',
               }}>
@@ -245,7 +245,7 @@ import {
   
   const NAV_ITEMS = [
     {
-      label: 'Why TMetric',
+      label: 'Why TimeSand',
       children: [
         {
           label: 'Time Trackting',
@@ -295,11 +295,15 @@ import {
       ],
     },
     {
-      label: 'Learn Design',
+      label: 'Pricing',
       href: '#',
     },
     {
-      label: 'Hire Designers',
+      label: 'Support',
+      href: '#',
+    },
+    {
+      label: 'Blog',
       href: '#',
     },
   ];
