@@ -15,6 +15,7 @@ import {
     Image,
     useDisclosure,
   } from '@chakra-ui/react';
+  import {Link as RouteLink} from "react-router-dom"
   import {
     HamburgerIcon,
     CloseIcon,
@@ -52,7 +53,7 @@ import {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Link href='/' w={{ base: '50%', md: '10%' }}><Image src={Logo}  /></Link>
+            <RouteLink to='/'><Image src={Logo} w={{ base: '50%', md: '25%' }}  /></RouteLink>
   
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav />
@@ -61,18 +62,22 @@ import {
   
           <Stack
             flex={{ base: 1, md: 0 }}
+            alignItems="center"
             justify={'flex-end'}
             direction={'row'}
             spacing={6}>
-            <Button
+           <RouteLink to={'/login'}>
+           <Button
               as={'a'}
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
-              href={'/login'}>
+              >
               Sign In
             </Button>
-            <Button
+           </RouteLink> 
+           <RouteLink to={'/register'}>
+           <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               fontWeight={600}
@@ -84,6 +89,8 @@ import {
               }}>
               Sign Up
             </Button>
+           </RouteLink>
+            
           </Stack>
         </Flex>
   

@@ -10,7 +10,6 @@ import {
   AccordionItem,
   AccordionButton,
   Box,
-  AccordionIcon,
   AccordionPanel,
 } from "@chakra-ui/react";
 import {BsFillPeopleFill, BsFillStopwatchFill, BsFolder2} from 'react-icons/bs'
@@ -31,7 +30,7 @@ export default function MyTime() {
             rounded={"md"}
             alt={"feature image"}
             src={
-              "https://tmetric.com/media/1kxfndjp/img-advantages.svg"
+              'https://tmetric.com/media/1kxfndjp/img-advantages.svg'
             }
             // objectFit={"cover"}
           />
