@@ -15,6 +15,7 @@ import {
   Divider,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -22,27 +23,84 @@ import { SiLinkedin, SiMessenger } from "react-icons/si";
 import { Link as RouteLink } from "react-router-dom";
 import Logo from "./timesand.png";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
+import { useState, useEffect } from "react";
+import {
+  faCheck,
+  faTimes,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const EMAIL_REGEX = /^[\w]+@([\w-]+\.)+[\w-]{3}$/g;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-console.log(USER_REGEX.test)
-const initialData={
-  name:'',
-  email:'',
-  pass:''
-}
 export default function SignUp() {
+  const toast=useToast()
   const [showPassword, setShowPassword] = useState(false);
-  const [userData,setUserData]=useState(initialData)
+  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [isChecked,setIsChecked]=useState(false)
 
-  const handleChange=(e)=>{
-    setUserData({...userData,[e.target.name]:e.target.value})
+  const [name, setName] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  // const [success,setSuccess]=useState(false)
+
+  useEffect(() => {
+    setValidName(name.length>=3&&name.length<=20);
+    // console.log(validName)
+  }, [name]);
+
+  useEffect(() => {
+    const result = EMAIL_REGEX.test(email);
+    // console.log(result);
+    setValidEmail(result);
+  }, [email]);
+
+  useEffect(() => {
+    const result = PWD_REGEX.test(pwd);
+    // console.log(result);
+    setValidPwd(result);
+    setValidMatch(pwd === matchPwd);
+  }, [pwd, matchPwd]);
+
+  const handleSubmit=()=>{
+    const userData={
+      name,
+      email,
+      password:pwd
+    }
+    localStorage.setItem("user_data",JSON.stringify(userData));
+    toast({
+      position:'top',
+      title: 'Account created.',
+      description: "We've created your account for you.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+      onCloseComplete:(()=>window.location.href='/login')
+    })
   }
-  console.log(userData)
+  // useEffect(()=>{
+  //   if(success){
+  //     <RouteLink to={'/login'}/>
+  //   }
+  // },[success])
+  
+
   return (
     <Stack
       w={"75%"}
@@ -60,24 +118,89 @@ export default function SignUp() {
             </Box>
           </RouteLink>
           <Heading fontSize={"2xl"}>Create Your Account</Heading>
-          <FormControl id="user" isRequired>
-            <FormLabel>Name</FormLabel>
-            <Input type="text" name="name" onChange={(e)=>handleChange(e)} placeholder="Sumit Pokhriyal" />
+          <FormControl id="user">
+            <FormLabel>
+              Name
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validName ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validName || !name ? "hide" : "invalid"}
+              />
+            </FormLabel>
+            <Input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Sumit Pokhriyal"
+              onBlur={() => setNameFocus(true)}
+            />
+            <Text
+              className={
+                nameFocus && !validName ? "instructions" : "offscreen"
+              }
+            >
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              User name allowed from 3-20 characters.
+            </Text>
           </FormControl>
-          <FormControl id="email" isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input type="email" name="email" onChange={(e)=>handleChange(e)} placeholder="sumit2000@gmail.com" required/>
+          <FormControl id="email">
+            <FormLabel>
+              Email
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validEmail ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validEmail || !email ? "hide" : "invalid"}
+              />
+            </FormLabel>
+            <Input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="sumit2000@gmail.com"
+              // onFocus={() => setEmailFocus(true)}
+              onBlur={() => setEmailFocus(true)}
+              required
+            />
+            <Text
+              className={
+                emailFocus && !validEmail ? "instructions" : "offscreen"
+              }
+            >
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              The email address format is invalid.
+            </Text>
           </FormControl>
-          <FormControl id="password" isRequired>
-            <FormLabel>Password</FormLabel>
+          <FormControl id="password">
+            <FormLabel>
+              Password
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validPwd ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validPwd || !pwd ? "hide" : "invalid"}
+              />
+            </FormLabel>
             <InputGroup>
               <Input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 name="pass"
-                onChange={(e)=>handleChange(e)}
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                onBlur={() => setPwdFocus(true)}
                 required
               />
+
               <InputRightElement h={"full"}>
                 <Button
                   variant={"ghost"}
@@ -89,6 +212,59 @@ export default function SignUp() {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            <Text
+              className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
+            >
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              8 to 24 characters.
+              <br />
+              Must include uppercase and lowercase letters, a number and a
+              special character.
+              <br />
+              Allowed special characters: ! @ # $ %
+            </Text>
+          </FormControl>
+          <FormControl>
+            <FormLabel>
+              Confirm Password
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validMatch && matchPwd ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validMatch || !matchPwd ? "hide" : "invalid"}
+              />
+            </FormLabel>
+            <InputGroup>
+              <Input
+                type={showConfirmPwd ? "text" : "password"}
+                placeholder="Enter your password"
+                name="pass"
+                value={matchPwd}
+                onChange={(e) => setMatchPwd(e.target.value)}
+                onBlur={() => setMatchFocus(true)}
+                required
+              />
+              <InputRightElement h={"full"}>
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    setShowConfirmPwd((showConfirmPwd) => !showConfirmPwd)
+                  }
+                >
+                  {showConfirmPwd ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            <Text
+              className={
+                matchFocus && !validMatch ? "instructions" : "offscreen"
+              }
+            >
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              Password does not match the confirm password.
+            </Text>
           </FormControl>
           <Stack spacing={6}>
             <Stack
@@ -96,11 +272,19 @@ export default function SignUp() {
               align={"start"}
               justify={"start"}
             >
-              <Checkbox required>I accept</Checkbox>
+              <Checkbox onChange={()=>setIsChecked(!isChecked)}>I accept</Checkbox>
               <Link color={"blue.500"}>Terms of Service</Link>
             </Stack>
             <Box>
-              <Button w={"100%"} colorScheme={"blue"} variant={"solid"}>
+              <Button
+                disabled={
+                 !validName || !validEmail || !validPwd || !validMatch || !isChecked ? true : false
+                }
+                onClick={handleSubmit}
+                w={"100%"}
+                colorScheme={"blue"}
+                variant={"solid"}
+              >
                 Sign Up
               </Button>
             </Box>
