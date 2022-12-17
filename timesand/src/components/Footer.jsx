@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import Logo from '../images/timesand.png'
+import Logo from '../images/timesand_removebg.png'
 
 import {
   Box,

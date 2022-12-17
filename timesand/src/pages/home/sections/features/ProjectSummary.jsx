@@ -8,7 +8,6 @@ import {
     UnorderedList,
     ListItem,
     Button,
-    Link,
   } from "@chakra-ui/react";
   
   export default function ProjectSummary() {

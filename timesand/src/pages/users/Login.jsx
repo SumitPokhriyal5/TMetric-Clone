@@ -14,6 +14,7 @@ import {
   Divider,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -25,7 +26,40 @@ import { BsApple } from "react-icons/bs";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  return (
+  const [email,setEmail]=useState('');
+  const [pwd,setPwd]=useState('');
+  const toast=useToast()
+
+
+  const handleLogin=()=>{
+    const userData=JSON.parse(localStorage.getItem('user_data'))
+    if(userData.email===email&&userData.password===pwd){
+      toast({
+        position:'top',
+        title: 'Login Successful.',
+        description: "Congratulation you've successfully Loged in.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        onCloseComplete:(()=>window.location.href='/time')
+      })
+      
+    }
+    else{
+      // console.log('fail')
+      toast({
+        position:'top',
+        title: 'Login Failed.',
+        description: "Incorrect Email or Password",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+  }
+
+  return  (
+    
     <Flex bgColor='#f6f7f8' p={8} flex={1} flexDirection="column" gap={'20px'} align={"center"} justify={"center"}>
         <Stack boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px" borderRadius="15px"  spacing={4} w={"full"} maxW={"md"}>
           <Box  bgColor='#f2f5fc' borderRadius="15px 15px 0 0" p='30px 10px' display={'grid'} gap={10}>
@@ -39,13 +73,14 @@ const Login = () => {
           <Box display={'grid'} gap="20px" p={"20px 40px"}>
           <FormControl id="email" isRequired>
             <FormLabel>Email</FormLabel>
-            <Input type="email" placeholder="sumit2000@gmail.com" />
+            <Input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="sumit2000@gmail.com" />
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
                 type={showPassword ? "text" : "password"}
+                value={pwd} onChange={(e)=>setPwd(e.target.value)}
                 placeholder="Enter your password"
               />
               <InputRightElement h={"full"}>
@@ -62,7 +97,7 @@ const Login = () => {
           </FormControl>
           <Stack spacing={6}>
             <Box>
-              <Button w={"100%"} colorScheme={"blue"} variant={"solid"}>
+              <Button w={"100%"} onClick={handleLogin} colorScheme={"blue"} variant={"solid"}>
                 Log In
               </Button>
             </Box>
