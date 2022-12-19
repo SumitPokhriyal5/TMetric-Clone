@@ -34,6 +34,12 @@ const Login = () => {
   const handleLogin=()=>{
     const userData=JSON.parse(localStorage.getItem('user_data'))
     if(userData.email===email&&userData.password===pwd){
+      const logindata={
+        email,
+        password:pwd
+      }
+      localStorage.setItem('login_data',JSON.stringify(logindata));
+
       toast({
         position:'top',
         title: 'Login Successful.',
@@ -41,9 +47,8 @@ const Login = () => {
         status: 'success',
         duration: 9000,
         isClosable: true,
-        onCloseComplete:(()=>window.location.href='/time')
+        onCloseComplete:(()=>window.location.href='/')
       })
-      
     }
     else{
       // console.log('fail')

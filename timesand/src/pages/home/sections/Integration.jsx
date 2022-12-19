@@ -53,7 +53,7 @@ export default function Integration() {
       <SimpleGrid
         mt={"-70px"}
         p={"10px 120px"}
-        columns={8}
+        columns={[1,2,3,4,5,8]}
         justifyContent={"center"}
         spacing={5}
       >
@@ -205,9 +205,10 @@ export default function Integration() {
       <SimpleGrid
         mb={"40px"}
         p={"10px 120px"}
-        columns={5}
-        display="flex"
-        justifyContent={"center"}
+        // columns={5}
+        columns={[1,2,3,5]}
+        display={{base:'none','2xl':"flex"}}
+        justifyContent={{base:'none','2xl':"center"}}
         spacing={10}
       >
         <Box
