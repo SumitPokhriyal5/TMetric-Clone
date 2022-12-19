@@ -183,14 +183,14 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={4}>
+    <Stack direction={"row"} spacing={10}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
+              <RouteLink
                 p={2}
-                href={navItem.href ?? "#"}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
@@ -200,7 +200,7 @@ const DesktopNav = () => {
                 }}
               >
                 {navItem.label}
-              </Link>
+              </RouteLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -384,7 +384,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Pricing",
-    href: "#",
+    href: "/pricing",
   },
   {
     label: "Support",
