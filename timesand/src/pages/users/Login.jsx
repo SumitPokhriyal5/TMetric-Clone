@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { Link as RouteLink } from "react-router-dom";
 import Logo from "./timesand_removebg.png";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -31,7 +31,7 @@ const Login = () => {
   const [pwd,setPwd]=useState('');
   const toast=useToast()
 
-const navigate=useNavigate()
+// const navigate=useNavigate()
   const handleLogin=()=>{
     const userData=JSON.parse(localStorage.getItem('user_data'))
     if(userData.email===email&&userData.password===pwd){
@@ -48,8 +48,8 @@ const navigate=useNavigate()
         status: 'success',
         duration: 9000,
         isClosable: true,
-        // onCloseComplete:(()=>window.location.href='/')
-        onCloseComplete:(()=>navigate('/'))
+        onCloseComplete:(()=>window.location.href=('/'))
+        // onCloseComplete:(()=>navigate('/'))
       })
     }
     else{
