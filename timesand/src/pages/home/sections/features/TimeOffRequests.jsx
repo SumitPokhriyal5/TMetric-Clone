@@ -8,6 +8,7 @@ import {
     UnorderedList,
     ListItem,
     Button,
+    WrapItem,
   } from "@chakra-ui/react";
   
   export default function TimeOffRequests() {
@@ -22,7 +23,9 @@ import {
               <ListItem>time off calendar</ListItem>
               <ListItem>pto calculations</ListItem>
             </UnorderedList>
-            <Button w={'20%'} colorScheme='blue'>Start Free Trial</Button>
+            <WrapItem>
+            <Button colorScheme="blue">Start Free Trial</Button>
+          </WrapItem>
           </Stack>
           <Flex w={'100%'} >
             <Image
@@ -31,7 +34,7 @@ import {
               src={
                 "https://tmetric.com/media/mlzbtxv5/time-off-calendar-case.svg"
               }
-              objectFit={"cover"}
+              // objectFit={"cover"}
             />
           </Flex>
         </SimpleGrid>
