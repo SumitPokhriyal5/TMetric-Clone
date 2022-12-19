@@ -15,6 +15,7 @@ import {
   InputGroup,
   InputRightElement,
   useToast,
+  Link,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -68,11 +69,11 @@ const Login = () => {
     <Flex bgColor='#f6f7f8' p={8} flex={1} flexDirection="column" gap={'20px'} align={"center"} justify={"center"}>
         <Stack boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px" borderRadius="15px"  spacing={4} w={"full"} maxW={"md"}>
           <Box  bgColor='#f2f5fc' borderRadius="15px 15px 0 0" p='30px 10px' display={'grid'} gap={10}>
-          <RouteLink to={"/"}>
+          <Link href={"/"}>
             <Box display={"flex"} justifyContent="center">
               <Image color='#f2f5fc' maxW={"150px"} src={Logo} />
             </Box>
-          </RouteLink>
+          </Link>
           <Heading fontSize={"2xl"}>Log into Timesand</Heading>
           </Box>
           <Box display={'grid'} gap="20px" p={"20px 40px"}>

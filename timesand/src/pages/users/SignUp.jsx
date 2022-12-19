@@ -108,7 +108,7 @@ export default function SignUp() {
       m={"20px auto"}
       borderRadius="15px"
       minH={"90vh"}
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "column", lg: "row" }}
     >
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
         <Stack spacing={4} w={"full"} maxW={"md"}>
