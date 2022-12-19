@@ -20,7 +20,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SiLinkedin, SiMessenger } from "react-icons/si";
-import { Link as RouteLink } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import Logo from "./timesand.png";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -77,6 +77,8 @@ export default function SignUp() {
     setValidMatch(pwd === matchPwd);
   }, [pwd, matchPwd]);
 
+  const navigate=useNavigate()
+
   const handleSubmit=()=>{
     const userData={
       name,
@@ -91,7 +93,7 @@ export default function SignUp() {
       status: 'success',
       duration: 9000,
       isClosable: true,
-      onCloseComplete:(()=>window.location.href='/login')
+      onCloseComplete:(()=>navigate('/login'))
     })
   }
   // useEffect(()=>{
